@@ -26,6 +26,21 @@ class PlaySoundsViewController: UIViewController {
     var audioPlayerNode: AVAudioPlayerNode!
     var stopTimer: Timer!
     
+    enum ButtonType: Int {
+        case slow = 0, fast, highPitch, lowPitch, echo, reverb
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureUIForLandscape()
+        setupAudio()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureUI(.notPlaying)
+    }
+    
     /*configures the buttons to prevent stretching in landscape mode. Based on solution at: https://stackoverflow.com/questions/38697032/how-to-center-an-image-inside-an-uibutton-without-stretching-in-both-direction-i
      */
     func configureUIForLandscape(){
@@ -41,21 +56,6 @@ class PlaySoundsViewController: UIViewController {
         highPitchButton.imageView?.contentMode = .scaleAspectFit
         lowPitchButton.contentMode = .center
         lowPitchButton.imageView?.contentMode = .scaleAspectFit
-    }
-    
-    enum ButtonType: Int {
-        case slow = 0, fast, highPitch, lowPitch, echo, reverb
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureUIForLandscape()
-        setupAudio()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        configureUI(.notPlaying)
     }
     
     // MARK: Sound functions
@@ -82,5 +82,4 @@ class PlaySoundsViewController: UIViewController {
     @IBAction func stopButtonPressed(_ sender: AnyObject) {
         stopAudio()
     }
-
 }
